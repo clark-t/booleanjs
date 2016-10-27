@@ -1,0 +1,28 @@
+{
+  "name": "booleanjs",
+  "version": "1.0.0",
+  "description": "A boolean caculation tool for Object or Array. 对象或数组进行布尔运算的工具",
+  "scripts": {
+    "test": "node ./node_modules/mocha/bin/mocha test/*.spec.js"
+  },
+  "dependencies": {},
+  "author": "clarkt (clarktanglei@163.com)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/clark-t/booleanjs.git"
+  },
+  "license": "BSD",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3"
+  },
+  "keywords": [
+    "boolean",
+    "Array",
+    "Object"
+  ],
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  }
+}
