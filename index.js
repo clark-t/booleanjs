@@ -90,6 +90,10 @@ export default {
 
     },
 
+    excludeObject: function (obj1, obj2) {
+
+    },
+
     isContain: function (obj1, obj2) {
         switch (this.instance(obj1)) {
             case 'Object':
