@@ -19,10 +19,7 @@ export default {
                     return objs[0];
                 }
 
-                let obj2Keys = Object.keys(objs[1]);
-
                 return Object.keys(objs[0])
-                    .filter(key => obj2Keys.indexOf(key) > -1)
                     .filter(key => objs[0][key] === objs[1][key])
                     .reduce((res, key) => setKey(res, key, objs[0][key]), {});
             default:
@@ -86,12 +83,22 @@ export default {
         }
     },
 
-    exclude: function () {
-
+    exclude: function (obj1, obj2) {
+        return Array.isArray(obj1)
+            ? excludeArray(obj1, obj2)
+            : excludeObject(obj1, obj2);
     },
 
     excludeObject: function (obj1, obj2) {
+        let keys = Array.isArray(obj2)
+            ? obj2.filter(key => obj1[key] != null)
+            : Object.keys(obj2).filter(key => obj1[key] === obj2[key]);
 
+        return keys.reduce((res, key) => setKey(res, key, obj1[key]), {});
+    },
+
+    excludeArray: function (arr1, arr2) {
+        return arr1.filter(obj1 => !this.isContain(arr2, obj1));
     },
 
     isContain: function (obj1, obj2) {
@@ -123,7 +130,7 @@ export default {
 
     isContainObject: function (obj1, obj2) {
         // 对象就判断对应属性是否相等即可
-        var obj2Keys = Object.keys(obj2);
+        let obj2Keys = Object.keys(obj2);
 
         if (obj2Keys.length > Object.keys(obj1).length) {
             return false;
@@ -145,7 +152,7 @@ export default {
             return true;
         }
 
-        var obj1Instance = this.instance(obj1);
+        let obj1Instance = this.instance(obj1);
         // 两者原型不同时，不相等
         if (obj1Instance !== this.instance(obj2)) {
             return false;
@@ -188,7 +195,7 @@ export default {
      */
     isEqualObject: function (obj1, obj2) {
         // 对象就判断对应属性是否相等即可
-        var obj2Keys = Object.keys(obj2);
+        let obj2Keys = Object.keys(obj2);
         // 当不是部分相等模式时，需要对各属性值做完全匹配
         if (obj2Keys.length !== Object.keys(obj1).length) {
             return false;

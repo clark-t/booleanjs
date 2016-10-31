@@ -2,7 +2,7 @@ var bool = require('../dist/boolean.min');
 var expect = require('chai').expect;
 
 describe('test same', function () {
-    it('Some Object', function () {
+    it('Same Object', function () {
         expect(bool.same(
             {
                 a: '1',
@@ -40,7 +40,7 @@ describe('test same', function () {
         )).to.be.deep.equal({});
     });
 
-    it('Some Array', function () {
+    it('Same Array', function () {
         expect(bool.same(
             [1, 2, 3, 4],
             [0, 1, 3, 7]
@@ -82,8 +82,70 @@ describe('test merge', function () {
     });
 });
 
+describe('test exclude', function () {
+    it('Object exclude by object', function () {
+        expect(bool.merge(
+            {
+                a: '1',
+                b: '2'
+            },
+            {
+                b: 2
+            },
+            null,
+            {
+                c: 10086
+            }
+        )).to.be.deep.equal({
+            a: '1',
+            b: 2,
+            c: 10086
+        });
+    });
+
+    it('Object exclude by keys', function () {
+        expect(bool.merge(
+            {
+                a: '1',
+                b: '2'
+            },
+            {
+                b: 2
+            },
+            null,
+            {
+                c: 10086
+            }
+        )).to.be.deep.equal({
+            a: '1',
+            b: 2,
+            c: 10086
+        });
+    });
+
+    it('Array exclude', function () {
+        expect(bool.merge(
+            {
+                a: '1',
+                b: '2'
+            },
+            {
+                b: 2
+            },
+            null,
+            {
+                c: 10086
+            }
+        )).to.be.deep.equal({
+            a: '1',
+            b: 2,
+            c: 10086
+        });
+    });
+});
+
 describe('test isEqual', function () {
-    it('{a: "1", b: "2"} === {a: "1", b: "2"}', function () {
+    it('should be equal', function () {
         expect(bool.isEqual(
             {
                 a: '1',
@@ -94,9 +156,26 @@ describe('test isEqual', function () {
                 b: '2'
             }
         )).to.be.ok;
+
+        expect(bool.isEqual(
+            {
+                a: '1',
+                b: '2',
+                c: {
+                    d: ['e', 'f', 1, true]
+                }
+            },
+            {
+                a: '1',
+                b: '2',
+                c: {
+                    d: ['e', 'f', 1, true]
+                }
+            }
+        )).to.be.ok;
     });
 
-    it('{a: "1", b: "2"} !== {a: "1"}', function () {
+    it('should not be equal', function () {
         expect(bool.isEqual(
             {
                 a: '1',
@@ -106,30 +185,7 @@ describe('test isEqual', function () {
                 a: '1'
             }
         )).to.not.be.ok;
-    });
 
-    it('{a: "1", b: "2", c: {d: ["e", "f", 1, true]}}'
-    + ' === {a: "1", b: "2", c: {d: ["e", "f", 1, true]}}', function () {
-        expect(bool.isEqual(
-            {
-                a: '1',
-                b: '2',
-                c: {
-                    d: ['e', 'f', 1, true]
-                }
-            },
-            {
-                a: '1',
-                b: '2',
-                c: {
-                    d: ['e', 'f', 1, true]
-                }
-            }
-        )).to.be.ok;
-    });
-
-    it('{a: "1", b: "2", c: {d: ["e", "f", 1, 1]}}'
-    + ' !== {a: "1", b: "2", c: {d: ["e", "f", 1, true]}}', function () {
         expect(bool.isEqual(
             {
                 a: '1',
