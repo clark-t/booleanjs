@@ -4,43 +4,66 @@
  */
 
 export default {
+
+    /**
+     * 获取多个Object|Array的交集
+     *
+     * @param  {...Object|Array} objs arguments
+     * @return {Object|Array} 交集
+     */
     same: function (...objs) {
         return Array.isArray(objs[0])
             ? this.sameArray(...objs)
             : this.sameObject(...objs);
     },
 
-    sameObject: function (...objs) {
+    /**
+     * 获取多个Object的交集
+     *
+     * @param {Object} obj 第一个参数必须是个对象
+     * @param {...Object|Array=} objs arguments
+     *                                如果为Object，则直接取该对象与obj的交集
+     *                                如果为Array，则为要保留的keys
+     * @return {Object} 对象的交集
+     */
+    sameObject: function (obj, ...objs) {
         switch (objs.length) {
             case 0:
             case 1:
-            case 2:
-                if (objs[1] == null) {
-                    return objs[0];
+                if (objs[0] == null) {
+                    return obj;
                 }
 
-                return Object.keys(objs[0])
-                    .filter(key => objs[0][key] === objs[1][key])
-                    .reduce((res, key) => setKey(res, key, objs[0][key]), {});
+                let keys = Array.isArray(objs[0])
+                    ? objs[0].filter(key => obj[key] != null)
+                    : Object.keys(objs[0]).filter(key => obj[key] === objs[0][key]);
+
+                return keys.reduce((res, key) => setKey(res, key, obj[key]), {});
             default:
-                return objs.reduce((res, obj) => this.sameObject(res, obj));
+                return objs.reduce((res, obj) => this.sameObject(res, obj), obj);
         }
     },
 
-    sameArray: function (...arrs) {
+    /**
+     * 取多个Array的并集
+     *
+     * @param {Array} arr 第一个参数必须是个数组
+     * @param {...Array=} arrs arguments
+     * @return {Array} 数组的交集
+     */
+    sameArray: function (arr, ...arrs) {
         switch (arrs.length) {
             case 0:
             case 1:
-            case 2:
-                if (arrs[1] == null) {
-                    return arrs[0];
+                if (arrs[0] == null) {
+                    return arr;
                 }
 
-                return arrs[0].filter(item1 =>
-                        arrs[1].some(item2 => this.isEqual(item1, item2))
-                    );
+                return arr.filter(item1 =>
+                    arrs[0].some(item2 => this.isEqual(item1, item2))
+                );
             default:
-                return arrs.reduce((res, arr) => this.sameArray(res, arr));
+                return arrs.reduce((res, arr) => this.sameArray(res, arr), arr);
         }
     },
 
@@ -85,8 +108,8 @@ export default {
 
     exclude: function (obj1, obj2) {
         return Array.isArray(obj1)
-            ? excludeArray(obj1, obj2)
-            : excludeObject(obj1, obj2);
+            ? this.excludeArray(obj1, obj2)
+            : this.excludeObject(obj1, obj2);
     },
 
     excludeObject: function (obj1, obj2) {
@@ -94,7 +117,9 @@ export default {
             ? obj2.filter(key => obj1[key] != null)
             : Object.keys(obj2).filter(key => obj1[key] === obj2[key]);
 
-        return keys.reduce((res, key) => setKey(res, key, obj1[key]), {});
+        return Object.keys(obj1)
+            .filter(key => keys.indexOf(key) === -1)
+            .reduce((res, key) => setKey(res, key, obj1[key]), {});
     },
 
     excludeArray: function (arr1, arr2) {
@@ -214,6 +239,12 @@ export default {
         return Object.prototype.toString.call(obj).slice(8, -1);
     },
 
+    /**
+     * 判断是否为Object
+     *
+     * @param  {*}  obj 待判断的对象
+     * @return {boolean} 是否为Object
+     */
     isObject: function (obj) {
         return this.instance(obj) === 'Object';
     }

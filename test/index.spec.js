@@ -38,6 +38,19 @@ describe('test same', function () {
                 b: '5'
             }
         )).to.be.deep.equal({});
+
+        expect(bool.same(
+            {
+                a: '1',
+                b: '2',
+                c: {}
+            },
+            ['a', 'b', 'c'],
+            ['b', 'c']
+        )).to.be.deep.equal({
+            b: '2',
+            c: {}
+        });
     });
 
     it('Same Array', function () {
@@ -84,63 +97,37 @@ describe('test merge', function () {
 
 describe('test exclude', function () {
     it('Object exclude by object', function () {
-        expect(bool.merge(
+        expect(bool.exclude(
             {
                 a: '1',
                 b: '2'
             },
             {
-                b: 2
-            },
-            null,
-            {
-                c: 10086
+                b: '2',
+                a: 1
             }
         )).to.be.deep.equal({
-            a: '1',
-            b: 2,
-            c: 10086
+            a: '1'
         });
     });
 
     it('Object exclude by keys', function () {
-        expect(bool.merge(
+        expect(bool.exclude(
             {
                 a: '1',
                 b: '2'
             },
-            {
-                b: 2
-            },
-            null,
-            {
-                c: 10086
-            }
+            ['a']
         )).to.be.deep.equal({
-            a: '1',
-            b: 2,
-            c: 10086
+            b: '2'
         });
     });
 
     it('Array exclude', function () {
-        expect(bool.merge(
-            {
-                a: '1',
-                b: '2'
-            },
-            {
-                b: 2
-            },
-            null,
-            {
-                c: 10086
-            }
-        )).to.be.deep.equal({
-            a: '1',
-            b: 2,
-            c: 10086
-        });
+        expect(bool.exclude(
+            [1, 2, '3'],
+            [2]
+        )).to.be.deep.equal([1, '3']);
     });
 });
 
