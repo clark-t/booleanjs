@@ -233,7 +233,8 @@ export default {
      */
     isEqual: function (obj1, obj2) {
         // 经此判断之后，后续的基本数据类型都可直接返回false
-        if (obj1 === obj2) {
+        // 数字需要判断-0 和 0
+        if (obj1 === obj2 && obj1 !== 0) {
             return true;
         }
 
@@ -248,10 +249,16 @@ export default {
                 return this.isEqualArray(obj1, obj2);
             case 'Object':
                 return this.isEqualObject(obj1, obj2);
+            case 'Date':
+                return +obj1 === +obj2;
+            case 'Number':
+                // 解决NaN的判断
+                return obj1 !== obj2 ? obj2 !== obj2
+                    // 解决0 与 -0的判断
+                    : (obj1 === 0 ? 1 / obj1 === 1 / obj2 : obj1 === obj2);
             default:
-                // boolean number string null undefined
-                // 回头补上Date和RegEx
-                // number补上NaN和-0 +0的情况
+                // boolean string null undefined
+                // 回头补上RegEx
                 return false;
         }
     },

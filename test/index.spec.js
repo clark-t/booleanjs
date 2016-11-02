@@ -160,6 +160,9 @@ describe('test isEqual', function () {
                 }
             }
         )).to.be.ok;
+
+        expect(bool.isEqual(NaN, NaN)).to.be.ok;
+        expect(bool.isEqual(new Date(1234567890123), new Date(1234567890123))).to.be.ok;
     });
 
     it('should not be equal', function () {
@@ -189,6 +192,8 @@ describe('test isEqual', function () {
                 }
             }
         )).to.not.be.ok;
+
+        expect(bool.isEqual(-0, 0)).to.not.be.ok;
     });
 });
 
