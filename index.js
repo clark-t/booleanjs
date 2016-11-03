@@ -256,9 +256,10 @@ export default {
                 return obj1 !== obj2 ? obj2 !== obj2
                     // 解决0 与 -0的判断
                     : (obj1 === 0 ? 1 / obj1 === 1 / obj2 : obj1 === obj2);
+            case 'RegExp':
+                return obj1 + '' === obj2 + '';
             default:
                 // boolean string null undefined
-                // 回头补上RegEx
                 return false;
         }
     },
