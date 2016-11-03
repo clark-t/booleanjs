@@ -138,3 +138,13 @@ var b = bool.merge(
     [2, 6]
 );
 ```
+
+### exclude
+
+```javascript
+{Object|Array} exclude({Object|Array}obj1, {Object|Array}obj2)
+```
+
+返回obj1与obj2的补集
+
+当第一个参数为{Object}时，
