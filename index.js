@@ -120,7 +120,7 @@ export default {
 
                 return append(
                     arrs[0],
-                    toArray(arrs[1]).filter(obj2 => !this.isContain(arrs[0], obj2))
+                    arrs[1].filter(obj2 => !this.isContain(arrs[0], [obj2]))
                 );
             default:
                 return arrs.reduce((res, arr) => this.mergeArray(res, arr));
@@ -182,9 +182,9 @@ export default {
                     return arr;
                 }
 
-                return arr.filter(obj => !this.isContain(arrs[0], obj));
+                return arr.filter(obj => !this.isContain(arrs[0], [obj]));
             default:
-                return arrs.reduce((res, arr) => this.excludeArr(res, arr), arr);
+                return arrs.reduce((res, arr) => this.excludeArray(res, arr), arr);
         }
     },
 
@@ -193,7 +193,7 @@ export default {
      * 当判断对象为两个数组时，忽略数组顺序
      *
      * @param {Object|Array} obj1 obj1
-     * @param {*} obj2 obj2
+     * @param {Object|Array} obj2 obj2
      * @return {boolean} obj1是否包含obj2
      */
     isContain(obj1, obj2) {
@@ -210,16 +210,14 @@ export default {
     /**
      * 数组obj1是否包含obj2
      *
-     * @param {Array} obj1 数组
-     * @param {Object} obj2 当obj2不为数组时，则判断obj2是否为obj1中的元素
+     * @param {Array} obj1 obj1
+     * @param {Array} obj2 obj2
      * @return {boolean} obj1是否包含obj2
      */
     isContainArray(obj1, obj2) {
         if (obj1.length === 0) {
             return obj2 == null || this.isEqual(obj1, obj2);
         }
-
-        obj2 = toArray(obj2);
 
         if (obj2.length > obj1.length) {
             return false;
@@ -350,10 +348,6 @@ export default {
 function setKey(obj, key, value) {
     obj[key] = value;
     return obj;
-}
-
-function toArray(obj) {
-    return Array.isArray(obj) ? obj : [obj];
 }
 
 function append(arr1, arr2) {

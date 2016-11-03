@@ -115,9 +115,11 @@ describe('test exclude', function () {
         expect(bool.exclude(
             {
                 a: '1',
-                b: '2'
+                b: '2',
+                c: '3'
             },
-            ['a']
+            ['a'],
+            {c: '3'}
         )).to.be.deep.equal({
             b: '2'
         });
@@ -126,8 +128,9 @@ describe('test exclude', function () {
     it('Array exclude', function () {
         expect(bool.exclude(
             [1, 2, '3'],
-            [2]
-        )).to.be.deep.equal([1, '3']);
+            [2],
+            [1]
+        )).to.be.deep.equal(['3']);
     });
 });
 
