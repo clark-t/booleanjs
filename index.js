@@ -59,8 +59,10 @@ export default {
                     return arr;
                 }
 
-                return arr.filter(item1 =>
-                    arrs[0].some(item2 => this.isEqual(item1, item2))
+                return arr.filter(
+                    item1 => arrs[0].some(
+                        item2 => this.isEqual(item1, item2)
+                    )
                 );
             default:
                 return arrs.reduce((res, arr) => this.sameArray(res, arr), arr);
@@ -116,7 +118,8 @@ export default {
                     return arrs[0];
                 }
 
-                return append(arrs[0],
+                return append(
+                    arrs[0],
                     toArray(arrs[1]).filter(obj2 => !this.isContain(arrs[0], obj2))
                 );
             default:
@@ -202,8 +205,10 @@ export default {
             return false;
         }
 
-        return obj2.every(item2 =>
-            obj1.some(item1 => this.isEqual(item1, item2))
+        return obj2.every(
+            item2 => obj1.some(
+                item1 => this.isEqual(item1, item2)
+            )
         );
     },
 
@@ -257,7 +262,7 @@ export default {
                     // 解决0 与 -0的判断
                     : (obj1 === 0 ? 1 / obj1 === 1 / obj2 : obj1 === obj2);
             case 'RegExp':
-                return obj1 + '' === obj2 + '';
+                return `${obj1}` === `${obj2}`;
             default:
                 // boolean string null undefined
                 return false;
@@ -329,8 +334,11 @@ function toArray(obj) {
 }
 
 function append(arr1, arr2) {
-    return arr2.reduce((arr1, item2) => {
-        arr1.push(item2);
-        return arr1;
-    }, arr1);
+    return arr2.reduce(
+        (arr1, item2) => {
+            arr1.push(item2);
+            return arr1;
+        },
+        arr1
+    );
 }
