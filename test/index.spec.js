@@ -1,3 +1,8 @@
+/**
+ * @file index.spec.js
+ * @author clarkt(clarktanglei@163.com)
+ */
+
 var bool = require('../dist/boolean.min');
 var expect = require('chai').expect;
 

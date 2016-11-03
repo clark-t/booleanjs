@@ -82,7 +82,7 @@ export default {
     },
 
     /**
-     * 与Object.assign相同，只不过不想用babel-polyfill所以自己手写了个
+     * 与Object.assign类似，只不过不想用babel-polyfill所以自己手写了个
      *
      * @param  {...Object} objs 多个对象
      * @return {Object} 合并后的对象，同时内存地址指向传入的第一个参数
@@ -128,7 +128,7 @@ export default {
     },
 
     /**
-     * 求obj1与obj2的补集
+     * 求obj与objs的补集
      *
      * @param {Object|Array} obj obj
      * @param {...Object|Array} objs objs
