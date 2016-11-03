@@ -5,7 +5,7 @@ module.exports = {
     output: {
         path: './dist',
         filename: 'boolean.min.js',
-        library: '$',
+        library: 'bool',
         libraryTarget: 'umd',
         umdNamedDefine: true
     },
