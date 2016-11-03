@@ -32,8 +32,8 @@ var bool = window.bool;
 - [same](#same)
 - [merge](#merge)
 - [exclude](#exclude)
-- [isEqual](#isEqual)
-- [isContain](#isContain)
+- [isEqual](#isequal)
+- [isContain](#iscontain)
 
 ### same
 
