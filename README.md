@@ -186,7 +186,15 @@ var a = bool.exclude(
 
 判断两个对象是否深度相等，应该跟underscore实现的差不多
 
-** 注 ** 无法判断function类型
+** 注 ** 能判断的类型有
+- string
+- number
+- null
+- undefined
+- Array
+- Object
+- Date
+- RegExp
 
 #### Example
 
