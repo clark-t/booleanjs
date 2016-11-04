@@ -1,6 +1,6 @@
 {
   "name": "booleanjs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A boolean caculation tool for Object or Array. 对象或数组进行布尔运算的工具",
   "scripts": {
     "build": "node ./node_modules/webpack/bin/webpack --config webpack.config.js -p",

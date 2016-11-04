@@ -351,11 +351,6 @@ function setKey(obj, key, value) {
 }
 
 function append(arr1, arr2) {
-    return arr2.reduce(
-        (arr1, item2) => {
-            arr1.push(item2);
-            return arr1;
-        },
-        arr1
-    );
+    arr1.push(...arr2);
+    return arr1;
 }
